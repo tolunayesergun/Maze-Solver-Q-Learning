@@ -21,6 +21,7 @@ namespace MazeSolverQLearning
         public static int startPos = -1;
         public static int targetPos = -1;
         public static int minerPos = -1;
+        public static bool canChange = true;
 
         public static Bitmap dirt = new Bitmap(Properties.Resources.Dirt);
         public static Bitmap miner = new Bitmap(Properties.Resources.Miner);
@@ -29,10 +30,10 @@ namespace MazeSolverQLearning
         public static Bitmap greenDirt = new Bitmap(Properties.Resources.GreenDirt);
 
         public static double fnishScore = 100;
-        public static double blockScore = -60;
+        public static double blockScore = -100;
         public static double roamScore = -0.01;
         public static double outScore = -100;
-        public static double[,] qTable = new double[(areaXSize*areaYSize), 8];
+        public static double[,] qTable = new double[(areaXSize * areaYSize), 8];
 
         public static List<int> roamList = new List<int>();
 
@@ -160,31 +161,34 @@ namespace MazeSolverQLearning
 
         private void Area_Click(object sender, EventArgs e)
         {
-            Button selectedArea = sender as Button;
-            int selectedButton = Convert.ToInt32(selectedArea.Text);
+            if (canChange)
+            {
+                Button selectedArea = sender as Button;
+                int selectedButton = Convert.ToInt32(selectedArea.Text);
 
-            if (selectedButton == startPos)
-            {
-                selectedArea.BackgroundImage = dirt;
-                startPos = -1;
-            }
-            else if (selectedButton == targetPos)
-            {
-                selectedArea.BackgroundImage = dirt;
-                targetPos = -1;
-            }
-            else
-            {
-                if (startPos == -1)
+                if (selectedButton == startPos)
                 {
-                    selectedArea.BackgroundImage = miner;
-                    startPos = selectedButton;
-                    minerPos = selectedButton;
+                    selectedArea.BackgroundImage = dirt;
+                    startPos = -1;
                 }
-                else if (targetPos == -1)
+                else if (selectedButton == targetPos)
                 {
-                    selectedArea.BackgroundImage = targetImage;
-                    targetPos = selectedButton;
+                    selectedArea.BackgroundImage = dirt;
+                    targetPos = -1;
+                }
+                else
+                {
+                    if (startPos == -1)
+                    {
+                        selectedArea.BackgroundImage = miner;
+                        startPos = selectedButton;
+                        minerPos = selectedButton;
+                    }
+                    else if (targetPos == -1)
+                    {
+                        selectedArea.BackgroundImage = targetImage;
+                        targetPos = selectedButton;
+                    }
                 }
             }
         }
@@ -197,13 +201,12 @@ namespace MazeSolverQLearning
         {
             if (roamList.Count > 0)
             {
-                for (int i = 0; i < roamList.Count - 1; i++)
+                for (int i = 0; i < roamList.Count; i++)
                 {
                     var selectedButton = getButton(roamList[i]);
                     selectedButton.BackgroundImage = greenDirt;
                 }
-                var lastButton = getButton(roamList[roamList.Count - 1]);
-                lastButton.BackgroundImage = miner;
+                getButton(targetPos).BackgroundImage = targetImage;
             }
         }
 
@@ -217,6 +220,8 @@ namespace MazeSolverQLearning
                     if (selectedButton.Enabled == false) selectedButton.BackgroundImage = redDirt;
                     else selectedButton.BackgroundImage = dirt;
                 }
+                getButton(startPos).BackgroundImage = miner;
+                getButton(targetPos).BackgroundImage = targetImage;
             }
             roamList.Clear();
         }
@@ -282,16 +287,15 @@ namespace MazeSolverQLearning
             {
                 var area = getBiggestArea(minerPos);
 
-                if (area.nextArea < 0 || area.nextArea > (areaXSize*areaYSize)-1)
+                if (area.nextArea < 0 || area.nextArea > (areaXSize * areaYSize) - 1)
                 {
                     qTable[area.pastArea, area.pastAreaRotate] = outScore;
-             
+
                     break;
                 }
                 else if (getButton(area.nextArea).Enabled == false)
                 {
                     qTable[area.pastArea, area.pastAreaRotate] = blockScore + (learningRate * getBiggestArea(area.nextArea).pastAreaQScore);
-                    roamList.Add(area.nextArea);
                     break;
                 }
                 else if (area.nextArea == targetPos)
@@ -355,13 +359,12 @@ namespace MazeSolverQLearning
         {
             var AreaValues = new List<AreaValues>();
             AreaValues.Add(new AreaValues() { maxIndex = 0, maxValue = -10000 });
-   
+
             for (int i = 0; i < 8; i++)
             {
                 if (qTable[currentPos, i] == AreaValues[0].maxValue)
                 {
                     AreaValues.Add(new AreaValues() { maxIndex = i, maxValue = qTable[currentPos, i] });
-                    
                 }
                 else if (qTable[currentPos, i] > AreaValues[0].maxValue)
                 {
@@ -372,7 +375,7 @@ namespace MazeSolverQLearning
             var rndValue = 0;
             if (AreaValues.Count > 0)
             {
-                 rndValue = getRandomValue(AreaValues.Count); 
+                rndValue = getRandomValue(AreaValues.Count);
             }
 
             return new Area() { pastAreaQScore = AreaValues[rndValue].maxValue, nextArea = findAreaSpot(currentPos, AreaValues[rndValue].maxIndex), pastArea = currentPos, pastAreaRotate = AreaValues[rndValue].maxIndex };
@@ -380,7 +383,38 @@ namespace MazeSolverQLearning
 
         private void startTimer(object sender, EventArgs e)
         {
-            moveTimer.Enabled = true;
+            if (targetPos != -1 && startPos != -1)
+            {
+                canChange = false;
+                moveTimer.Enabled = true;
+            }
+        }
+
+        private void btnRestart(object sender, EventArgs e)
+        {
+            if (moveTimer.Enabled == true) moveTimer.Enabled = false;
+            pnlBoard.Controls.Clear();
+            qTable = new double[(areaXSize * areaYSize), 8];
+            CreateGame();
+            startPos = -1;
+            targetPos = -1;
+            minerPos = -1;
+            canChange = true;
+        }
+
+        private void btnRedraw(object sender, EventArgs e)
+        {
+            if (moveTimer.Enabled == true)
+            {
+                moveTimer.Enabled = false;
+                RemoveRoads();
+                getButton(startPos).BackgroundImage = dirt;
+                getButton(targetPos).BackgroundImage = dirt;
+                startPos = -1;
+                targetPos = -1;
+                minerPos = -1;
+                canChange = true;
+            }
         }
     }
 }
