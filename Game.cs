@@ -28,6 +28,7 @@ namespace MazeSolverQLearning
         public static Bitmap targetImage = new Bitmap(Properties.Resources.Gold);
         public static Bitmap redDirt = new Bitmap(Properties.Resources.RedDirt);
         public static Bitmap greenDirt = new Bitmap(Properties.Resources.GreenDirt);
+        public static Bitmap darkerRedDirt = new Bitmap(Properties.Resources.DarkerRedDirt);
 
         public static double fnishScore = 100;
         public static double blockScore = -100;
@@ -39,6 +40,8 @@ namespace MazeSolverQLearning
 
         #endregion Entities
 
+        #region CreateGame
+
         public Game()
         {
             InitializeComponent();
@@ -48,8 +51,6 @@ namespace MazeSolverQLearning
         {
             CreateGame();
         }
-
-        #region CreateGame
 
         private void CreateGame()
         {
@@ -83,6 +84,7 @@ namespace MazeSolverQLearning
                     FlatStyle = System.Windows.Forms.FlatStyle.Popup
                 };
                 btn.Click += new EventHandler(Area_Click);
+      
                 if (ButtonCount < areaXSize)
                 {
                     btn.Location = new Point(x, y);
@@ -114,7 +116,7 @@ namespace MazeSolverQLearning
                 blockSpawns[blockIterator] = i;
                 blockIterator++;
                 var selectedButton = getButton(i);
-                selectedButton.BackgroundImage = redDirt;
+                selectedButton.BackgroundImage = darkerRedDirt;
                 selectedButton.Enabled = false;
 
                 if (i != 0)
@@ -122,7 +124,7 @@ namespace MazeSolverQLearning
                     blockSpawns[blockIterator] = i * areaXSize - 1;
                     blockIterator++;
                     var selectedButton2 = getButton(i * areaXSize - 1);
-                    selectedButton2.BackgroundImage = redDirt;
+                    selectedButton2.BackgroundImage = darkerRedDirt;
                     selectedButton2.Enabled = false;
                 }
 
@@ -131,7 +133,7 @@ namespace MazeSolverQLearning
                     blockSpawns[blockIterator] = i * areaXSize;
                     blockIterator++;
                     var selectedButton2 = getButton(i * areaXSize);
-                    selectedButton2.BackgroundImage = redDirt;
+                    selectedButton2.BackgroundImage = darkerRedDirt;
                     selectedButton2.Enabled = false;
                 }
 
@@ -140,7 +142,7 @@ namespace MazeSolverQLearning
                     blockSpawns[blockIterator] = i + (areaXSize * (areaXSize - 1));
                     blockIterator++;
                     var selectedButton2 = getButton(i + (areaXSize * (areaXSize - 1)));
-                    selectedButton2.BackgroundImage = redDirt;
+                    selectedButton2.BackgroundImage = darkerRedDirt;
                     selectedButton2.Enabled = false;
                 }
             }
@@ -279,7 +281,13 @@ namespace MazeSolverQLearning
 
         #endregion GlobalFunctions
 
+        #region GameMechanics
         private void moveTimer_Tick(object sender, EventArgs e)
+        {
+            GameMechanics();
+        }
+
+        private void GameMechanics()
         {
             RemoveRoads();
 
@@ -287,13 +295,7 @@ namespace MazeSolverQLearning
             {
                 var area = getBiggestArea(minerPos);
 
-                if (area.nextArea < 0 || area.nextArea > (areaXSize * areaYSize) - 1)
-                {
-                    qTable[area.pastArea, area.pastAreaRotate] = outScore;
-
-                    break;
-                }
-                else if (getButton(area.nextArea).Enabled == false)
+              if (getButton(area.nextArea).Enabled == false)
                 {
                     qTable[area.pastArea, area.pastAreaRotate] = blockScore + (learningRate * getBiggestArea(area.nextArea).pastAreaQScore);
                     break;
@@ -302,6 +304,7 @@ namespace MazeSolverQLearning
                 {
                     qTable[area.pastArea, area.pastAreaRotate] = fnishScore + (learningRate * getBiggestArea(area.nextArea).pastAreaQScore);
                     roamList.Add(area.nextArea);
+                    targetImage = new Bitmap(Properties.Resources.SuccessGreenDirt);
                     break;
                 }
                 else
@@ -400,6 +403,7 @@ namespace MazeSolverQLearning
             targetPos = -1;
             minerPos = -1;
             canChange = true;
+            targetImage = new Bitmap(Properties.Resources.Gold);
         }
 
         private void btnRedraw(object sender, EventArgs e)
@@ -414,7 +418,13 @@ namespace MazeSolverQLearning
                 targetPos = -1;
                 minerPos = -1;
                 canChange = true;
+                targetImage = new Bitmap(Properties.Resources.Gold);
             }
         }
+
+        #endregion GameMechanics
+
+
     }
+
 }
