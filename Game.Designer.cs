@@ -44,33 +44,30 @@ namespace MazeSolverQLearning
             // 
             // pnlBoard
             // 
-            this.pnlBoard.Location = new System.Drawing.Point(7, 5);
+            this.pnlBoard.Location = new System.Drawing.Point(7, 64);
             this.pnlBoard.Name = "pnlBoard";
-            this.pnlBoard.Size = new System.Drawing.Size(822, 796);
+            this.pnlBoard.Size = new System.Drawing.Size(922, 896);
             this.pnlBoard.TabIndex = 0;
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.lblAreaSize);
             this.panel1.Controls.Add(this.areaSizeTrack);
             this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button2);
-            this.panel1.Location = new System.Drawing.Point(828, 5);
+            this.panel1.Location = new System.Drawing.Point(8, 1);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(178, 796);
+            this.panel1.Size = new System.Drawing.Size(909, 57);
             this.panel1.TabIndex = 1;
             // 
             // button3
             // 
             this.button3.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.button3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button3.Location = new System.Drawing.Point(0, 48);
+            this.button3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.button3.Location = new System.Drawing.Point(137, 0);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(178, 48);
+            this.button3.Size = new System.Drawing.Size(137, 57);
             this.button3.TabIndex = 2;
             this.button3.Text = "Tekrar Hedef Belirle";
             this.button3.UseVisualStyleBackColor = false;
@@ -79,10 +76,10 @@ namespace MazeSolverQLearning
             // button2
             // 
             this.button2.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.button2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button2.Dock = System.Windows.Forms.DockStyle.Left;
             this.button2.Location = new System.Drawing.Point(0, 0);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(178, 48);
+            this.button2.Size = new System.Drawing.Size(137, 57);
             this.button2.TabIndex = 0;
             this.button2.Text = "Başlat ";
             this.button2.UseVisualStyleBackColor = false;
@@ -91,10 +88,10 @@ namespace MazeSolverQLearning
             // button4
             // 
             this.button4.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.button4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button4.Location = new System.Drawing.Point(0, 96);
+            this.button4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.button4.Location = new System.Drawing.Point(274, 0);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(178, 48);
+            this.button4.Size = new System.Drawing.Size(168, 57);
             this.button4.TabIndex = 3;
             this.button4.Text = "Tekrar Harita Oluştur";
             this.button4.UseVisualStyleBackColor = false;
@@ -108,21 +105,21 @@ namespace MazeSolverQLearning
             // areaSizeTrack
             // 
             this.areaSizeTrack.Dock = System.Windows.Forms.DockStyle.Top;
-            this.areaSizeTrack.Location = new System.Drawing.Point(0, 144);
+            this.areaSizeTrack.Location = new System.Drawing.Point(442, 0);
             this.areaSizeTrack.Maximum = 40;
             this.areaSizeTrack.Name = "areaSizeTrack";
-            this.areaSizeTrack.Size = new System.Drawing.Size(178, 45);
+            this.areaSizeTrack.Size = new System.Drawing.Size(467, 45);
             this.areaSizeTrack.TabIndex = 3;
             this.areaSizeTrack.Value = 15;
             this.areaSizeTrack.Scroll += new System.EventHandler(this.areaSizeTrack_Scroll);
             // 
             // lblAreaSize
             // 
-            this.lblAreaSize.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblAreaSize.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblAreaSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lblAreaSize.Location = new System.Drawing.Point(0, 189);
+            this.lblAreaSize.Location = new System.Drawing.Point(442, 36);
             this.lblAreaSize.Name = "lblAreaSize";
-            this.lblAreaSize.Size = new System.Drawing.Size(178, 21);
+            this.lblAreaSize.Size = new System.Drawing.Size(467, 21);
             this.lblAreaSize.TabIndex = 4;
             this.lblAreaSize.Text = "25 x 25";
             this.lblAreaSize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -132,7 +129,7 @@ namespace MazeSolverQLearning
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Snow;
-            this.ClientSize = new System.Drawing.Size(1018, 796);
+            this.ClientSize = new System.Drawing.Size(923, 950);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlBoard);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
