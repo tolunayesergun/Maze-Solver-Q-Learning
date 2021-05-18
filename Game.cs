@@ -13,14 +13,13 @@ namespace MazeSolverQLearning
         #region Entities
 
         private readonly Random rnd = new Random(); // Random sayı üretmemiz için gerekli instance
-        protected List<string> gameLogs = new List<string>(); // Oyun kayıtları
-        public static int logNum;
         public static double learningRate = 0.9;
         public static int areaXSize = 26;   // Oyunda ki bir satırda ki kare sayısı
         public static int areaYSize = 26;   // Oyunda ki bir stunda ki kare sayısı
         public static int startPos = -1;
         public static int targetPos = -1;
         public static int minerPos = -1;
+        public static int iterationCount = 0;
         public static bool canChange = true;
 
         public static Bitmap dirt = new Bitmap(Properties.Resources.Dirt);
@@ -35,6 +34,7 @@ namespace MazeSolverQLearning
         public static double roamScore = -0.01;
         public static double outScore = -100;
         public static double[,] qTable = new double[(areaXSize * areaYSize), 8];
+        private int[] blockSpawns;
 
         public static List<int> roamList = new List<int>();
 
@@ -109,7 +109,7 @@ namespace MazeSolverQLearning
             int blockIterator = 0;
             int wallSize = (areaXSize * 4) - 4;
             int totalBlocksCount = ((areaTotalSize * 30) / 100) + wallSize; // Alandaki Toplam Altın Sayısı
-            int[] blockSpawns = new int[totalBlocksCount + wallSize]; // Alandaki altınların yeri (Buton numarası olarak)
+            blockSpawns = new int[totalBlocksCount + wallSize]; // Alandaki altınların yeri (Buton numarası olarak)
 
             for (int i = 0; i < areaXSize + 1; i++)
             {
@@ -252,27 +252,41 @@ namespace MazeSolverQLearning
 
         public void WriteText()
         {
-            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "/PlayLogs")) Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "/PlayLogs");
-            string filePath = AppDomain.CurrentDomain.BaseDirectory + "/PlayLogs/" + "Game.txt";
+            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "/Results")) Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "/Results");
+            string filePath = AppDomain.CurrentDomain.BaseDirectory + "/Results/" + "Game.txt";
             FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
 
             StreamWriter streamWriter = new StreamWriter(fileStream);
 
-            foreach (var item in gameLogs)
+            streamWriter.WriteLine("*************************************************************************************************************************************************************************************");
+            streamWriter.WriteLine();
+            streamWriter.WriteLine(" Harita Ölçüleri = " + areaXSize.ToString() + " x " + areaYSize.ToString());
+            streamWriter.WriteLine(" Baslangic karesi = " + startPos.ToString());
+            streamWriter.WriteLine(" Hedef kare = " + targetPos.ToString());
+            streamWriter.WriteLine(" Tablodaki D -> Duvar olduğunu göstermektedir.");
+            streamWriter.WriteLine();
+            streamWriter.WriteLine("*************************************************************************************************************************************************************************************");
+            streamWriter.WriteLine();
+            for (int i = 0; i < areaXSize * areaYSize; i++)
             {
-                streamWriter.WriteLine(item);
+                if (i % (areaXSize) == 0 && i != 0) streamWriter.WriteLine();
+                if (blockSpawns.Contains(i)) streamWriter.Write("[ D-" + (i.ToString("0000")) + " ] ");
+                else streamWriter.Write("[ " + (i.ToString("000000")) + " ] ");
+
             }
+            streamWriter.WriteLine();
+            streamWriter.WriteLine();
+            streamWriter.WriteLine("*************************************************************************************************************************************************************************************");
+            streamWriter.WriteLine();
+            streamWriter.WriteLine(" Bulunan En Kısa Yol = " + string.Join("->",roamList));
+            streamWriter.WriteLine();
+            streamWriter.WriteLine("*************************************************************************************************************************************************************************************");
 
             streamWriter.Flush();
 
             streamWriter.Close();
             fileStream.Close();
         }   // Logları text dosyasına basan fonksiyon
-
-        public void addLog(string text)
-        {
-            gameLogs.Add((++logNum) + " - " + text);
-        }  // Gelen stringleri log listesine ekleyen fonksiyon
 
         public Button getButton(int btnName)
         {
@@ -282,8 +296,11 @@ namespace MazeSolverQLearning
         #endregion GlobalFunctions
 
         #region GameMechanics
+
         private void moveTimer_Tick(object sender, EventArgs e)
         {
+            iterationCount++;
+            button2.Text = "İterasyon Sayısı = " + iterationCount.ToString();
             GameMechanics();
         }
 
@@ -407,6 +424,7 @@ namespace MazeSolverQLearning
             canChange = true;
             targetImage = new Bitmap(Properties.Resources.RedGoldDirt);
             roamList = new List<int>();
+            button2.Text = "Başlat";
         }
 
         private void btnRedraw(object sender, EventArgs e)
@@ -423,6 +441,7 @@ namespace MazeSolverQLearning
                 canChange = true;
                 targetImage = new Bitmap(Properties.Resources.RedGoldDirt);
                 roamList = new List<int>();
+                button2.Text = "Başlat";
             }
         }
 
@@ -433,6 +452,25 @@ namespace MazeSolverQLearning
             var size = (areaSizeTrack.Value + 10).ToString();
             lblAreaSize.Text = size + " x " + size;
         }
-    }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            WriteText();
+
+            if (moveTimer.Enabled == true)
+            {
+                moveTimer.Enabled = false;
+                RemoveRoads();
+                getButton(startPos).BackgroundImage = dirt;
+                getButton(targetPos).BackgroundImage = dirt;
+                startPos = -1;
+                targetPos = -1;
+                minerPos = -1;
+                canChange = true;
+                targetImage = new Bitmap(Properties.Resources.RedGoldDirt);
+                roamList = new List<int>();
+                button2.Text = "Başlat";
+            }
+        }
+    }
 }
