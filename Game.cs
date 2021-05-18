@@ -24,8 +24,8 @@ namespace MazeSolverQLearning
         public static bool canChange = true;
 
         public static Bitmap dirt = new Bitmap(Properties.Resources.Dirt);
-        public static Bitmap miner = new Bitmap(Properties.Resources.Miner);
-        public static Bitmap targetImage = new Bitmap(Properties.Resources.Gold);
+        public static Bitmap miner = new Bitmap(Properties.Resources.GreenMinerDirt);
+        public static Bitmap targetImage = new Bitmap(Properties.Resources.RedGoldDirt);
         public static Bitmap redDirt = new Bitmap(Properties.Resources.RedDirt);
         public static Bitmap greenDirt = new Bitmap(Properties.Resources.GreenDirt);
         public static Bitmap darkerRedDirt = new Bitmap(Properties.Resources.DarkerRedDirt);
@@ -84,7 +84,7 @@ namespace MazeSolverQLearning
                     FlatStyle = System.Windows.Forms.FlatStyle.Popup
                 };
                 btn.Click += new EventHandler(Area_Click);
-      
+
                 if (ButtonCount < areaXSize)
                 {
                     btn.Location = new Point(x, y);
@@ -295,7 +295,7 @@ namespace MazeSolverQLearning
             {
                 var area = getBiggestArea(minerPos);
 
-              if (getButton(area.nextArea).Enabled == false)
+                if (getButton(area.nextArea).Enabled == false)
                 {
                     qTable[area.pastArea, area.pastAreaRotate] = blockScore + (learningRate * getBiggestArea(area.nextArea).pastAreaQScore);
                     break;
@@ -397,13 +397,16 @@ namespace MazeSolverQLearning
         {
             if (moveTimer.Enabled == true) moveTimer.Enabled = false;
             pnlBoard.Controls.Clear();
+            areaXSize = (areaSizeTrack.Value + 11);
+            areaYSize = (areaSizeTrack.Value + 11);
             qTable = new double[(areaXSize * areaYSize), 8];
             CreateGame();
             startPos = -1;
             targetPos = -1;
             minerPos = -1;
             canChange = true;
-            targetImage = new Bitmap(Properties.Resources.Gold);
+            targetImage = new Bitmap(Properties.Resources.RedGoldDirt);
+            roamList = new List<int>();
         }
 
         private void btnRedraw(object sender, EventArgs e)
@@ -418,13 +421,18 @@ namespace MazeSolverQLearning
                 targetPos = -1;
                 minerPos = -1;
                 canChange = true;
-                targetImage = new Bitmap(Properties.Resources.Gold);
+                targetImage = new Bitmap(Properties.Resources.RedGoldDirt);
+                roamList = new List<int>();
             }
         }
 
         #endregion GameMechanics
 
-
+        private void areaSizeTrack_Scroll(object sender, EventArgs e)
+        {
+            var size = (areaSizeTrack.Value + 10).ToString();
+            lblAreaSize.Text = size + " x " + size;
+        }
     }
 
 }

@@ -103,6 +103,16 @@ namespace MazeSolverQLearning.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GreenMinerDirt {
+            get {
+                object obj = ResourceManager.GetObject("GreenMinerDirt", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Miner {
             get {
                 object obj = ResourceManager.GetObject("Miner", resourceCulture);
@@ -116,6 +126,16 @@ namespace MazeSolverQLearning.Properties {
         internal static System.Drawing.Bitmap RedDirt {
             get {
                 object obj = ResourceManager.GetObject("RedDirt", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RedGoldDirt {
+            get {
+                object obj = ResourceManager.GetObject("RedGoldDirt", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -32,11 +32,14 @@ namespace MazeSolverQLearning
             this.components = new System.ComponentModel.Container();
             this.pnlBoard = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.moveTimer = new System.Windows.Forms.Timer(this.components);
             this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.moveTimer = new System.Windows.Forms.Timer(this.components);
+            this.areaSizeTrack = new System.Windows.Forms.TrackBar();
+            this.lblAreaSize = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.areaSizeTrack)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlBoard
@@ -48,54 +51,88 @@ namespace MazeSolverQLearning
             // 
             // panel1
             // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.lblAreaSize);
+            this.panel1.Controls.Add(this.areaSizeTrack);
+            this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Location = new System.Drawing.Point(834, 5);
+            this.panel1.Location = new System.Drawing.Point(828, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(140, 796);
+            this.panel1.Size = new System.Drawing.Size(178, 796);
             this.panel1.TabIndex = 1;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.button3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button3.Location = new System.Drawing.Point(0, 48);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(178, 48);
+            this.button3.TabIndex = 2;
+            this.button3.Text = "Tekrar Hedef Belirle";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.btnRedraw);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(0, 87);
+            this.button2.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.button2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button2.Location = new System.Drawing.Point(0, 0);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(137, 48);
-            this.button2.TabIndex = 1;
+            this.button2.Size = new System.Drawing.Size(178, 48);
+            this.button2.TabIndex = 0;
             this.button2.Text = "Başlat ";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.startTimer);
             // 
-            // button1
+            // button4
             // 
-            this.button1.Location = new System.Drawing.Point(0, 34);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(137, 48);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Engelleri Tekrar Oluştur";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btnRestart);
+            this.button4.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.button4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button4.Location = new System.Drawing.Point(0, 96);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(178, 48);
+            this.button4.TabIndex = 3;
+            this.button4.Text = "Tekrar Harita Oluştur";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.btnRestart);
             // 
             // moveTimer
             // 
             this.moveTimer.Interval = 10;
             this.moveTimer.Tick += new System.EventHandler(this.moveTimer_Tick);
             // 
-            // button3
+            // areaSizeTrack
             // 
-            this.button3.Location = new System.Drawing.Point(0, 141);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(137, 48);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Tekrar Hedef Belirle";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.btnRedraw);
+            this.areaSizeTrack.Dock = System.Windows.Forms.DockStyle.Top;
+            this.areaSizeTrack.Location = new System.Drawing.Point(0, 144);
+            this.areaSizeTrack.Maximum = 40;
+            this.areaSizeTrack.Name = "areaSizeTrack";
+            this.areaSizeTrack.Size = new System.Drawing.Size(178, 45);
+            this.areaSizeTrack.TabIndex = 3;
+            this.areaSizeTrack.Value = 15;
+            this.areaSizeTrack.Scroll += new System.EventHandler(this.areaSizeTrack_Scroll);
+            // 
+            // lblAreaSize
+            // 
+            this.lblAreaSize.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblAreaSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblAreaSize.Location = new System.Drawing.Point(0, 189);
+            this.lblAreaSize.Name = "lblAreaSize";
+            this.lblAreaSize.Size = new System.Drawing.Size(178, 21);
+            this.lblAreaSize.TabIndex = 4;
+            this.lblAreaSize.Text = "25 x 25";
+            this.lblAreaSize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(978, 796);
+            this.BackColor = System.Drawing.Color.Snow;
+            this.ClientSize = new System.Drawing.Size(1018, 796);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlBoard);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
@@ -104,6 +141,8 @@ namespace MazeSolverQLearning
             this.Text = "Maze Solver";
             this.Load += new System.EventHandler(this.Game_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.areaSizeTrack)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -113,8 +152,10 @@ namespace MazeSolverQLearning
         private System.Windows.Forms.Panel pnlBoard;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Timer moveTimer;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TrackBar areaSizeTrack;
+        private System.Windows.Forms.Label lblAreaSize;
     }
 }

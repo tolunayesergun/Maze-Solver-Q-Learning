@@ -130,11 +130,17 @@
   <data name="GreenDirt" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GreenDirt.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="GreenMinerDirt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GreenMinerDirt.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Miner" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Miner.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RedDirt" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RedDirt.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RedGoldDirt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RedGoldDirt.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SuccessGreenDirt" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SuccessGreenDirt.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
