@@ -78,7 +78,7 @@ namespace MazeSolverQLearning
             {
                 Button btn = new Button
                 {
-                    Font = new System.Drawing.Font("Microsoft Sans Serif", (float)cellHeight / 6f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162))),
+                    Font = new System.Drawing.Font("Microsoft Sans Serif", (float)cellHeight / 5f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162))),
                     Size = new System.Drawing.Size(cellWidth, cellHeight),
                     TextAlign = System.Drawing.ContentAlignment.BottomLeft,
                     BackColor = Color.White,
@@ -340,7 +340,7 @@ namespace MazeSolverQLearning
                         lastTotalScore = Convert.ToSingle(totalScore);
                         lastRoamListCount = roamList.Count();
                     }
-                    else FnishSolve(); 
+                    else FnishSolve();
 
                     break;
                 }
@@ -471,8 +471,6 @@ namespace MazeSolverQLearning
             }
         }
 
-        #endregion GameMechanics
-
         private void areaSizeTrack_Scroll(object sender, EventArgs e)
         {
             var size = (areaSizeTrack.Value + 10).ToString();
@@ -506,5 +504,8 @@ namespace MazeSolverQLearning
             SuccessScore.Clear();
             StepCount.Clear();
         }
+
+        #endregion GameMechanics
+
     }
 }
