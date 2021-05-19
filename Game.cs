@@ -31,7 +31,10 @@ namespace MazeSolverQLearning
 
         public static List<float> SuccessScore = new List<float>();
         public static List<float> StepCount = new List<float>();
+        public static float lastRoamListCount = -1;
+        public static float lastTotalScore = -1;
 
+        public static int repeatCount = 0;
         public static double fnishScore = 100;
         public static double blockScore = -100;
         public static double roamScore = -0.01;
@@ -328,10 +331,17 @@ namespace MazeSolverQLearning
                     targetImage = new Bitmap(Properties.Resources.SuccessGreenDirt);
                     totalScore = Convert.ToDouble(decimal.Round(Convert.ToDecimal(totalScore), 2));
 
-                  
+                    if (lastRoamListCount == roamList.Count() && lastTotalScore == Convert.ToSingle(totalScore)) repeatCount++;
+                    else repeatCount = 0;
+                    if (repeatCount < 5)
+                    {
                         StepCount.Add(roamList.Count());
                         SuccessScore.Add(Convert.ToSingle(totalScore));
-                 
+                        lastTotalScore = Convert.ToSingle(totalScore);
+                        lastRoamListCount = roamList.Count();
+                    }
+                    else FnishSolve(); 
+
                     break;
                 }
                 else
@@ -471,27 +481,30 @@ namespace MazeSolverQLearning
 
         private void button5_Click(object sender, EventArgs e)
         {
+            FnishSolve();
+        }
+
+        private void FnishSolve()
+        {
+            if (moveTimer.Enabled == true) moveTimer.Enabled = false;
+            DrawRoads();
             ChartForm chart = new ChartForm();
             chart.ShowDialog();
 
             WriteText();
 
-            if (moveTimer.Enabled == true)
-            {
-                moveTimer.Enabled = false;
-                RemoveRoads();
-                getButton(startPos).BackgroundImage = dirt;
-                getButton(targetPos).BackgroundImage = dirt;
-                startPos = -1;
-                targetPos = -1;
-                minerPos = -1;
-                canChange = true;
-                targetImage = new Bitmap(Properties.Resources.RedGoldDirt);
-                roamList = new List<int>();
-                button2.Text = "Başlat";
-                SuccessScore.Clear();
-                StepCount.Clear();
-            }
+            RemoveRoads();
+            getButton(startPos).BackgroundImage = dirt;
+            getButton(targetPos).BackgroundImage = dirt;
+            startPos = -1;
+            targetPos = -1;
+            minerPos = -1;
+            canChange = true;
+            targetImage = new Bitmap(Properties.Resources.RedGoldDirt);
+            roamList = new List<int>();
+            button2.Text = "Başlat";
+            SuccessScore.Clear();
+            StepCount.Clear();
         }
     }
 }

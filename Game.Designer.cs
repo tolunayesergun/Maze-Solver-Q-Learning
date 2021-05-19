@@ -60,9 +60,9 @@ namespace MazeSolverQLearning
             this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button2);
-            this.panel1.Location = new System.Drawing.Point(8, 1);
+            this.panel1.Location = new System.Drawing.Point(2, 1);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(909, 48);
+            this.panel1.Size = new System.Drawing.Size(915, 48);
             this.panel1.TabIndex = 1;
             // 
             // lblAreaSize
@@ -71,7 +71,7 @@ namespace MazeSolverQLearning
             this.lblAreaSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblAreaSize.Location = new System.Drawing.Point(500, 27);
             this.lblAreaSize.Name = "lblAreaSize";
-            this.lblAreaSize.Size = new System.Drawing.Size(409, 21);
+            this.lblAreaSize.Size = new System.Drawing.Size(415, 21);
             this.lblAreaSize.TabIndex = 4;
             this.lblAreaSize.Text = "25 x 25";
             this.lblAreaSize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -82,7 +82,7 @@ namespace MazeSolverQLearning
             this.areaSizeTrack.Location = new System.Drawing.Point(500, 0);
             this.areaSizeTrack.Maximum = 40;
             this.areaSizeTrack.Name = "areaSizeTrack";
-            this.areaSizeTrack.Size = new System.Drawing.Size(409, 45);
+            this.areaSizeTrack.Size = new System.Drawing.Size(415, 45);
             this.areaSizeTrack.TabIndex = 3;
             this.areaSizeTrack.Value = 15;
             this.areaSizeTrack.Scroll += new System.EventHandler(this.areaSizeTrack_Scroll);
