@@ -29,6 +29,9 @@ namespace MazeSolverQLearning
         public static Bitmap greenDirt = new Bitmap(Properties.Resources.GreenDirt);
         public static Bitmap darkerRedDirt = new Bitmap(Properties.Resources.DarkerRedDirt);
 
+        public static List<float> SuccessScore = new List<float>();
+        public static List<float> StepCount = new List<float>();
+
         public static double fnishScore = 100;
         public static double blockScore = -100;
         public static double roamScore = -0.01;
@@ -272,13 +275,12 @@ namespace MazeSolverQLearning
                 if (i % (areaXSize) == 0 && i != 0) streamWriter.WriteLine();
                 if (blockSpawns.Contains(i)) streamWriter.Write("[ D-" + (i.ToString("0000")) + " ] ");
                 else streamWriter.Write("[ " + (i.ToString("000000")) + " ] ");
-
             }
             streamWriter.WriteLine();
             streamWriter.WriteLine();
             streamWriter.WriteLine("*************************************************************************************************************************************************************************************");
             streamWriter.WriteLine();
-            streamWriter.WriteLine(" Bulunan En Kısa Yol = " + string.Join("->",roamList));
+            streamWriter.WriteLine(" Bulunan En Kısa Yol = " + string.Join("->", roamList));
             streamWriter.WriteLine();
             streamWriter.WriteLine("*************************************************************************************************************************************************************************************");
 
@@ -307,7 +309,7 @@ namespace MazeSolverQLearning
         private void GameMechanics()
         {
             RemoveRoads();
-
+            double totalScore = 0;
             while (roamList.Count() < (areaXSize * areaYSize))
             {
                 var area = getBiggestArea(minerPos);
@@ -319,16 +321,26 @@ namespace MazeSolverQLearning
                 }
                 else if (area.nextArea == targetPos)
                 {
-                    qTable[area.pastArea, area.pastAreaRotate] = fnishScore + (learningRate * getBiggestArea(area.nextArea).pastAreaQScore);
+                    var score = fnishScore + (learningRate * getBiggestArea(area.nextArea).pastAreaQScore);
+                    qTable[area.pastArea, area.pastAreaRotate] = score;
+                    totalScore += score;
                     roamList.Add(area.nextArea);
                     targetImage = new Bitmap(Properties.Resources.SuccessGreenDirt);
+                    totalScore = Convert.ToDouble(decimal.Round(Convert.ToDecimal(totalScore), 2));
+
+                  
+                        StepCount.Add(roamList.Count());
+                        SuccessScore.Add(Convert.ToSingle(totalScore));
+                 
                     break;
                 }
                 else
                 {
-                    qTable[area.pastArea, area.pastAreaRotate] = roamScore + (learningRate * getBiggestArea(area.nextArea).pastAreaQScore);
+                    var score = roamScore + (learningRate * getBiggestArea(area.nextArea).pastAreaQScore);
+                    qTable[area.pastArea, area.pastAreaRotate] = score;
                     roamList.Add(area.nextArea);
                     minerPos = area.nextArea;
+                    totalScore += score;
                 }
             }
             minerPos = startPos;
@@ -425,6 +437,8 @@ namespace MazeSolverQLearning
             targetImage = new Bitmap(Properties.Resources.RedGoldDirt);
             roamList = new List<int>();
             button2.Text = "Başlat";
+            SuccessScore.Clear();
+            StepCount.Clear();
         }
 
         private void btnRedraw(object sender, EventArgs e)
@@ -442,6 +456,8 @@ namespace MazeSolverQLearning
                 targetImage = new Bitmap(Properties.Resources.RedGoldDirt);
                 roamList = new List<int>();
                 button2.Text = "Başlat";
+                SuccessScore.Clear();
+                StepCount.Clear();
             }
         }
 
@@ -455,6 +471,9 @@ namespace MazeSolverQLearning
 
         private void button5_Click(object sender, EventArgs e)
         {
+            ChartForm chart = new ChartForm();
+            chart.ShowDialog();
+
             WriteText();
 
             if (moveTimer.Enabled == true)
@@ -470,6 +489,8 @@ namespace MazeSolverQLearning
                 targetImage = new Bitmap(Properties.Resources.RedGoldDirt);
                 roamList = new List<int>();
                 button2.Text = "Başlat";
+                SuccessScore.Clear();
+                StepCount.Clear();
             }
         }
     }
